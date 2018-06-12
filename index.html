@@ -61,11 +61,18 @@
 
         <hr class="my-5">
 
-        <h2 class="display-4 pt-3">About</h2>
-        <p class="lead"></p>
+        <h2 class="display-4 pt-3">What is this LoRa?</h2>
+        <p class="lead">LoRa is a technology for building long range, low power wireless networks. Combined with the LoRaWAN protocol it creates a secure communication channel for connected devices.</p>
+        <p>Find out more about LoRa and LoRaWAN at <a href="https://www.semtech.com/technology/lora">Semtech</a> and <a href="https://en.wikipedia.org/wiki/LoRa">Wikipedia</a>.</p>
+
+        <h2 class="display-4 pt-5">About</h2>
+        <p class="lead">There are four main parts involved in the setup. A node that collects the data, a gateway that receives the data, the applications that use the data and the server to manage the nodes, gateways and applications.</p>
+        <p>Here you can find some technical information on what is being used in this setup and also some information for how to build your own network or build devices to extend an already existing network. When extending or connecting to and existing network you will need some information from the network owner to be able to connect new gateways or nodes.</p>
+        <p>If you are interested in extending or connecting to this network, just <a href="https://svehagen.io/#contact">contact me</a>!</p>
+
         <h3 class="mt-5">Gateway</h3>
         <p>The responsibility of the gateway is to send and receive packets to and from the nodes. Two applications are involved in this process. First, <a href="https://github.com/Lora-net/packet_forwarder">lora_pkt_fwd</a> is used to interface with the LoRa concentrator board, the iC880A, and then send them in JSON format via UDP. The next application, <a href="https://github.com/brocaar/lora-gateway-bridge">lora-gateway-bridge</a>, will receive the UDP messages and send them to the backend via MQTT. Packets can also be sent from the backend to the gateway so that they can be sent out to the nodes in the next send window.</p>
-        <p>I made a docker image to make it easy to get up and running. You can look <a href="https://github.com/tsvehagen/rpi-lora-gateway">here</a> for how to set it up.</p>
+        <p>If you are interested in building your own gateway like this, I made a docker image to make it easy to get up and running. You can look <a href="https://github.com/tsvehagen/rpi-lora-gateway">here</a> for how to set it up.</p>
 
         <div id="carousel-gateway" class="carousel slide" data-interval=false>
             <ol class="carousel-indicators">
@@ -142,9 +149,10 @@
         </div>
         <button class="btn btn-outline-primary mt-3" type="button" data-toggle="collapse" data-target="#gateway-parts">Show parts</button>
 
-        <h3 class="mt-5 pt-5">Nodes</h3>
+        <h3 class="mt-5">Nodes</h3>
         <p>One thing to keep in mind when choosing LoRa circuit for the node is to check whether it support LoRaWAN or just the LoRa modulation. If LoRaWAN is not supported as is the case with the popular SX1276 (e.g. RFM95), the LoRaWAN stack must be run in another processor and thus might require some extra space. If you were to use a LoRa module such as the RN2483 for example, LoRaWAN is handled directly in the module.</p>
         <p>For the node displayed here I choose a board from Adafruit which has both the RFM95 for LoRa and an ATmega32U4 MCU which is used for LoRaWAN stack and main application. I used the LMIC LoRaWAN stack for arduino which can be found <a href="https://github.com/matthijskooijman/arduino-lmic">here</a> and my application for this node can be found <a href="https://github.com/tsvehagen/lora-temp-node">here</a>. For this to fit in the 32u4 you need to disable ping and beacons in <a href="https://github.com/matthijskooijman/arduino-lmic/blob/master/src/lmic/config.h"><kbd>src/lmic/config.h</kbd></a>. You will also need to connect the DIO1 pin from the RFM95 to a pin on the 32u4. I simply connected it to digital pin 1 on the 32u4 since they're right next to each other on the Adafruit board.</p>
+        <p>The node here is used for measuring temperature but you can of course connect other sensors, modify the code and measure whatever you want.</p>
 
         <div id="carousel-node" class="carousel slide" data-interval=false>
             <ol class="carousel-indicators">
@@ -199,9 +207,8 @@
                         <td>Also get <a href="https://www.conrad.se/T%e4tning-Axxatronic-SA2-SA2-Svart-1-st.htm?websale8=conrad-swe&pi=1279800">this</a> for outside use</td>
                     </tr>
                     <tr>
-        </div>
-        <td><a href="https://www.adafruit.com/product/381">Temperature sensor</a></td>
-        <td>&plusmn;0.5&deg;C</td>
+                        <td><a href="https://www.adafruit.com/product/381">Temperature sensor</a></td>
+                        <td>&plusmn;0.5&deg;C</td>
                     </tr>
                     <tr>
                         <td>M8 Circular Connector</td>
@@ -217,14 +224,14 @@
                     </tr>
                 </tbody>
             </table>
-            </div>
-            <button class="btn btn-outline-primary mt-3" type="button" data-toggle="collapse" data-target="#nodes-parts">Show parts</button>
+        </div>
+        <button class="btn btn-outline-primary mt-3" type="button" data-toggle="collapse" data-target="#nodes-parts">Show parts</button>
 
-            <h3 class="mt-5">Backend</h3>
-            <p>For a backend I use the awesome project <a href="https://loraserver.io" target="_blank">loraserver.io</a>. All information can be found on the projects page but basically the role of the backend is to manage the LoRaWAN network, i.e. gateways, nodes and users.</p>
+        <h3 class="mt-5">Server</h3>
+        <p>The server application used is the awesome project <a href="https://loraserver.io">loraserver.io</a>. All information can be found on the projects page but basically the role of the server is to manage the LoRaWAN network, i.e. gateways, nodes, applications and users.</p>
 
-            <h2 class="display-4 pt-3">Contact</h2>
-            <p class="lead">Please visit <a href="https://svehagen.io">svehagen.io</a> for contact information.</p>
+        <h2 class="display-4 pt-5">Contact</h2>
+        <p class="lead">Please visit <a href="https://svehagen.io/#contact">svehagen.io</a> for contact information.</p>
         </main>
 
         <footer class="footer">
